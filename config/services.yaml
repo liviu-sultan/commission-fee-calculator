@@ -19,6 +19,17 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\Service\Rule\DepositRule: ~
+    App\Service\Rule\BusinessWithdrawRule: ~
+    App\Service\Rule\PrivateWithdrawRule: ~
+
+    App\Service\CommissionCalculator:
+        arguments:
+            $rules:
+                - '@App\Service\Rule\DepositRule'
+                - '@App\Service\Rule\BusinessWithdrawRule'
+                - '@App\Service\Rule\PrivateWithdrawRule'
+    Symfony\Contracts\HttpClient\HttpClientInterface: '@http_client'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
